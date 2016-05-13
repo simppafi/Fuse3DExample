@@ -1,0 +1,22 @@
+<App Theme="Basic" Background="#000">
+
+	<Panel>
+
+	    <Scene Camera="CameraEntity">
+
+			<Entity ux:Name="CameraEntity">
+				<Frustum FovDegrees="120" ZNear="10" ZFar="10000" ux:Name="CameraFrustum" />
+				<Transform3D Position="0, 0, 0" RotationDegrees="0, 0, 0" Scaling="1, 1, 1" ux:Name="CameraTransform" />
+			</Entity>
+
+			<CustomRenderNode ux:Name="MyRenderNode" CameraFrustum="CameraFrustum" CameraTransform="CameraTransform" />
+
+	    </Scene>
+
+	    <Panel HitTestMode="LocalBounds" Pointer.Pressed="MyRenderNode.PointerPressed" Pointer.Moved="MyRenderNode.PointerMoved" Pointer.Released="MyRenderNode.PointerReleased" Pointer.WheelMoved="MyRenderNode.PointerWheelMoved"> 
+	   	</Panel>
+
+	</Panel>
+	
+</App>
+
