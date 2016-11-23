@@ -2,17 +2,16 @@ using Uno;
 using Uno.Collections;
 using Uno.Graphics;
 using Fuse;
-using Fuse.Designer;
 using Fuse.Entities;
-using Fuse.Controls;
 using Fuse.Drawing.Primitives;
-using Uno.Content.Models;
 using Fuse.Drawing.Batching;
 
 public partial class CustomRenderNode
 {
 	public Frustum CameraFrustum {get;set;}
 	public Transform3D CameraTransform {get;set;}
+
+	private texture2D MyTexture = import Texture2D("Assets/texture.jpg");
 
 	public CustomRenderNode()
 	{
@@ -73,6 +72,8 @@ public partial class CustomRenderNode
 				Geom.Positions.Write(v + center);
 
 				Geom.Normals.Write(v);
+
+				Geom.TexCoord0s.Write((vertices[i].XY + float2(1f)) *  .5f) ;
 			}
 
 			for(i = 0; i < indices.Count; i++)
@@ -105,12 +106,17 @@ public partial class CustomRenderNode
 		CameraTransform.LookAt(float3(0,0,0), float3(0,1,0));
 		
 		
-		draw DefaultShading, Geom {
+		draw this, DefaultShading, Geom {
 			
 			DrawContext : dc;
 			
 			DiffuseColor : (Vector.Normalize(pixel WorldPosition) + 1f) * .5f;
-			
+
+			float4 tex : 
+				req(MyTexture as Texture2D)
+					sample(MyTexture, TexCoord, Uno.Graphics.SamplerState.LinearClamp);
+
+			PixelColor : (prev + tex) * tex;
 		};
 			
 

@@ -4,6 +4,7 @@
         "Fuse",
         "FuseJS",
         "Fuse.Drawing.Batching",
+        "Fuse.Entities",
         "Uno.Collections",
         "Uno.Geometry"
   ],
